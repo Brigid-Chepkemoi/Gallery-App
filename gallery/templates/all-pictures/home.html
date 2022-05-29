@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block content %}
+    <section>
+
+        <div style="background-image: url('https://mdbootstrap.com/img/Photos/Others/slide4.jpg'); background-repeat: no-repeat; background-size: cover;">
+            <!-- Caption --->
+            <div class="full-bg-img  flex-center white-text rgba-stylish-strong">
+
+                <ul class="animated fadeIn col-md-12 list-unstyled">
+
+                    <li>
+
+                        <h1 class="h1-responsive font-weight-bold mt-5 pt-5 ">Welcome to Zoo pictures</h1>
+
+                    </li>
+
+                    <li>
+
+                        <p>A curated gallery of pictures by me</p>
+
+                    </li>
+
+                    <li class="pb-5">
+
+                        <a href="#main"
+                           class="mb-5 btn btn-danger btn-rounded" rel="nofollow">See more</a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- Caption --->
+
+        </div>
+
+    </section>
+
+    <div class="container-fluid">
+
+        <div class="row mt-5">
+
+            <!-- Main news --->
+            <div class="col-xl-12 col-md-12 " id="main">
+
+                <h4 class="font-weight-bold"><strong>GALLERY </strong></h4>
+
+                <hr class="red title-hr">
+
+                <!-- Section: Group of personal cards --->
+                <section class="pt-2 mt-3 pb-3">
+
+                    <!-- Grid row --->
+                    <div class="row">
+                        {% for image in all_images %}
+                        <!-- Grid column --->
+                        <div class="col-md-6 col-lg-3">
+
+                            <!-- Card --->
+                            <div class="card card-personal mb-4">
+
+                                <!-- Card image --->
+                                <div class="view overlay">
+
+                                    <img class="card-img-top" src="{{ image.image.url }}" alt="{{ image.name }}" />
+
+                                    <a href="" data-toggle="modal" data-target="#b{{ image.id }}">
+
+                                        <div class="mask rgba-white-slight"></div>
+
+                                    </a>
+
+
+                                </div>
+                                <div class="modal fade " id="b{{ image.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered " role="document">
+                                        <div class="modal-content modalcard">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="imageheader">{{image.name}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img src="{{image.image.url}}" alt="{{image.name}}" class="img-fluid">
+                                                <p class=" text-center">{{image.description}}</p>
+                                                <span class="btn btn-sm btn-dark-green white-text rounded-pill">{{image.category}}</span> <a
+                                                    href="/location/{{image.location}}/" class="btn btn-sm indigo white-text rounded-pill">{{image.location}}</a>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="col-md-7">
+                                                    <input class="form-control input-sm" type="text" value="{{image.image.url}}" id="{{image.id}}.url">
+                                                </div>
+
+                                                <button class="btn btn-success btn-sm ripe-malinka-gradient rounded-pill" onclick="copyLink('{{image.id}}.url')">Copy</button>
+                                                <button type="button" class="btn  btn-sm peach-gradient rounded-pill" data-dismiss="modal">Close </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card image --->
+
+                                <!-- Card content --->
+                                <div class="card-body">
+
+                                    <!-- Title --->
+                                    <a>
+
+                                        <h4 class="card-title"><strong>{{ image.name }} </strong></h4>
+
+                                    </a>
+
+                                    <a><span class="badge badge-default">{{ image.category }}</span></a>
+
+                                    <hr>
+
+                                    <a class="card-meta"><span><i class="fas fa-user pr-1"></i>{{ image.author }}</span></a>
+
+                                    <p class="card-meta float-right"><i class="fas fa-calendar"></i> {{ image.date }}</p>
+
+                                </div>
+                                <!-- Card content --->
+
+                            </div>
+                            <!-- Card --->
+
+
+                        </div>
+                        <!-- Grid column --->
+
+                        {% endfor %}
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <section>
+
+        <div class="col-xl-11 col-md-12 mb-5 mt-4">
+
+            <!-- Grid row --->
+            <div class="row">
+
+                <!-- Grid column --->
+                <div class="col-lg-4 col-md-12">
+
+                    <!-- Section: Locations --->
+                    <section class="section mb-5" id="locations">
+
+                        <h4 class="font-weight-bold"><strong>LOCATIONS</strong></h4>
+
+                        <hr class="red">
+
+                        <ul class="list-group z-depth-1 mt-4">
+
+                            {% for location in all_locations %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                <a class="btn aqua-gradient btn-sm rounded-pill" id="btn"
+                                   href="/location/{{location.name}}/">{{location.name}}</a>
+
+                                <span class="badge badge-danger badge-pill">{{ forloop.revcounter }}</span>
+
+                            </li>
+                            {% endfor  %}
+                        </ul>
+
+                    </section>
+                    <!-- Section: Locations --->
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

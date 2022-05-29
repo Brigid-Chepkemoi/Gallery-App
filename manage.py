@@ -2,6 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from distutils.sysconfig import get_python_lib
 
 
 def main():
