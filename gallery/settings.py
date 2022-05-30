@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'galleryapp.apps.GalleryappConfig'
 ]
 
 MIDDLEWARE = [
@@ -72,13 +73,30 @@ WSGI_APPLICATION = 'gallery.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+MODE = os.environ.get('MODE', default="dev")
+DEBUG = os.environ.get('DEBUG', default=False)
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# development
+if MODE == "dev":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': f'{os.environ.get("POSTGRES_DB_NAME")}',
+            'USER': f'{os.environ.get("POSTGRES_USER")}',
+            'PASSWORD': f'{os.environ.get("POSTGRES_PASSWORD")}',
+            'HOST': f'{os.environ.get("POSTGRES_DB_HOST")}',
+            'PORT': f'{os.environ.get("POSTGRES_DB_PORT")}',
+        }
     }
-}
+# production
+else:
+
+    DATABASES = {
+        'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+    }
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 
 # Password validation
@@ -105,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
