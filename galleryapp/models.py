@@ -21,14 +21,26 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
+class Category(models.Model):
+    name = models.CharField(max_length=45)
+
+    def save_category(self):
+        self.save()
+
+    def delete_category(self):
+        self.delete()
+
+    def __str__(self):
+        return self.name
+
 class Image(models.Model):
     name = models.CharField(max_length=65)
     description = models.TextField()
     author = models.CharField(max_length=43, default='admin')
     image = models.ImageField(upload_to='images/')
     date = models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE,null=True)
+    location = models.ForeignKey('Location', on_delete=models.CASCADE,null=True)
 
     class Meta:
         ordering = ['date']
