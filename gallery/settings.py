@@ -1,9 +1,12 @@
 import os
 
 import dj_database_url
-import django_on_heroku
+import django_heroku
 from decouple import config,Csv
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -52,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'galleryapp.apps.GalleryappConfig',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
